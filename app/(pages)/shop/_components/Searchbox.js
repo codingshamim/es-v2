@@ -25,7 +25,7 @@ export default function Searchbox() {
   return (
     <div className="relative col-span-3 md:col-span-2">
       <input
-        className="outline-none focus:border-white py-[4px] rounded-sm w-full px-8 bg-transparent nav-border"
+        className="outline-none  focus:border-white py-[4px] rounded-sm w-full px-12 bg-transparent nav-border"
         type="text"
         name="search"
         placeholder="Search your exciting tshirt..."
@@ -44,7 +44,7 @@ export default function Searchbox() {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="absolute top-2 left-1 svg lucide lucide-search"
+        className="absolute top-2 left-4 svg lucide lucide-search"
       >
         <circle cx={11} cy={11} r={8} />
         <path d="m21 21-4.3-4.3" />
