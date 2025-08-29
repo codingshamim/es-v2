@@ -24,13 +24,14 @@ export default function ReusableImage({
   height = 1200,
   className = "w-full md:w-[40%]",
   imageClassName = "w-full h-full object-cover",
-  containerClassName = "block relative overflow-hidden rounded-2xl bg-gray-900 shadow-2xl hover:shadow-white/10 transition-all duration-500 group-hover:scale-[1.02]",
+  containerClassName = "block relative overflow-hidden  bg-gray-900 shadow-2xl hover:shadow-white/10 transition-all duration-500 group-hover:scale-[1.02]",
   aspectRatio = "aspect-square",
   priority = true,
   quality = 100,
   sizes = "(max-width: 768px) 100vw, 40vw",
   showZoomIndicator = true,
   enableHover = true,
+  customClickHandler = () => {},
 }) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,7 +54,7 @@ export default function ReusableImage({
     <>
       {/* Loading skeleton */}
       {isLoading && (
-        <div className="absolute inset-0 z-10 bg-gray-900 animate-pulse rounded-2xl">
+        <div className="absolute inset-0 z-10 bg-gray-900 animate-pulse ">
           <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin"></div>
@@ -62,7 +63,10 @@ export default function ReusableImage({
       )}
 
       {/* Main image */}
-      <div className={`relative ${aspectRatio} overflow-hidden rounded-2xl`}>
+      <div
+        onClick={customClickHandler}
+        className={`relative ${aspectRatio} overflow-hidden `}
+      >
         <Image
           width={width}
           height={height}

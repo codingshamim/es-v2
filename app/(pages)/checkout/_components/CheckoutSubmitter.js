@@ -217,7 +217,7 @@ export default function CheckoutSubmitter({
         );
       } else {
         router.push(
-          `/order-success?transactionId=${checkoutResponse?.data?.transactionId}&totalAmount=${totalPrice}&name=${checkoutResponse?.data?.name}`
+          `/order-success?transactionId=${checkoutResponse?.data?.transactionId}&totalAmount=${totalPrice}&name=${checkoutResponse?.data?.name}&fee=${shippingOption.fee}`
         );
         setSubmitSuccess(
           "Order placed successfully! You will receive a confirmation shortly."

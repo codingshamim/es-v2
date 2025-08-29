@@ -3,7 +3,7 @@ export const TopbarActionDat = [
     id: 1,
     title: "Profile",
     link: "/dashboard",
-    svg: (
+    icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={20}
@@ -25,7 +25,7 @@ export const TopbarActionDat = [
     id: 2,
     title: "Orders",
     link: "/dashboard/orders",
-    svg: (
+    icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={20}
@@ -46,6 +46,5 @@ export const TopbarActionDat = [
         <path d="M8 6h13" />
       </svg>
     ),
-  }
-  
+  },
 ];

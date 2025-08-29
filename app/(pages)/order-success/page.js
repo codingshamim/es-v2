@@ -3,7 +3,7 @@ import mainPrice from "@/helpers/mainPrice";
 import Link from "next/link";
 
 export default function SuccessPage({ searchParams }) {
-  const { transactionId, totalAmount, name } = searchParams || {};
+  const { transactionId, totalAmount, name, fee } = searchParams || {};
 
   // If any required query parameter is missing, redirect to homepage (or another safe page)
   if (!transactionId || !totalAmount || !name) {
@@ -58,7 +58,7 @@ export default function SuccessPage({ searchParams }) {
           <div className="flex items-center justify-between">
             <span className="text-gray-400">Total Amount</span>
             <span className="text-xl font-semibold text-white">
-              {mainPrice(totalAmount)}
+              {mainPrice(parseFloat(totalAmount) + parseFloat(fee) || 0)}
             </span>
           </div>
         </div>

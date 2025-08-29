@@ -2,14 +2,13 @@
 
 import { useFormStatus } from "react-dom";
 
-
 export default function CheckoutButton({ totalItems }) {
   const { pending } = useFormStatus();
 
   return (
     <button
       type="submit"
-      className="w-full mt-6 bg-white text-black py-3 font-bold hover:bg-gray-200 transition disabled:opacity-50"
+      className="w-full mt-6 bg-white text-black py-3 font-medium hover:bg-gray-200 transition disabled:opacity-50"
       disabled={pending}
     >
       {pending ? (

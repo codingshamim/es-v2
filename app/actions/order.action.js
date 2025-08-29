@@ -10,6 +10,7 @@ import { UserModel } from "../backend/models/UserModel";
 import { calculateOrdersTotal } from "@/helpers/calculateOrdersTotal";
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
 
 /**
  * Get paginated and filtered list of orders
@@ -237,6 +238,30 @@ export const deleteOrder = async (orderId) => {
         error: false,
         message: "Order deleted successfully!",
         ok: true,
+      };
+    }
+  } catch (err) {
+    return {
+      error: true,
+      message: err.message,
+    };
+  }
+};
+
+export const getOrderByLoggedinUser = async () => {
+  try {
+    const user = await auth();
+    if (user) {
+      await dbConnect();
+      const orders = await orderModel.find({ user: user.user?.id });
+      return {
+        error: false,
+        orders: formateMongo(orders),
+      };
+    } else {
+      return {
+        error: true,
+        message: "User not authenticated",
       };
     }
   } catch (err) {

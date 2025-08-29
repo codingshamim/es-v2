@@ -6,6 +6,8 @@ import OrderItem from "../_components/OrderItem";
 import mainPrice from "@/helpers/mainPrice";
 import Link from "next/link";
 
+import InvoiceDownloadButton from "./_components/InvoiceDownloadButton";
+
 // Helper function to format date
 const formatDate = (dateString) => {
   try {
@@ -386,9 +388,7 @@ export default async function OrderDetails({ params }) {
           >
             Contact Support
           </Link>
-          <button className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all">
-            Download Invoice
-          </button>
+          <InvoiceDownloadButton order={order} />
         </div>
       </div>
     );

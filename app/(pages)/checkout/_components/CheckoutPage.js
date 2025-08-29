@@ -105,7 +105,7 @@ export default async function CheckoutPage() {
           {/* Delivery Option */}
           <DeliveryOption />
           {/* Summary */}
-          <div className="border border-gray-700 mt-4 p-6 bg-gray-900 h-fit">
+          <div className="border border-gray-700 mt-4 p-6 bg-black h-fit">
             <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">

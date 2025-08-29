@@ -33,11 +33,11 @@ export default function DeliveryOption() {
         />
         {deliveryOptions.map((delivery) => (
           <button
-          type="button"
+            type="button"
             onClick={() => setDeliveryOption(delivery)}
             key={delivery.id}
             className={`w-full border border-gray-600 px-4 py-2 text-left transition hover:bg-gray-800 ${
-              delivery.id === deliveryOption.id ? "bg-gray-800" : ""
+              delivery.id === deliveryOption.id ? "bg-secondary" : ""
             }`}
           >
             {delivery.title}

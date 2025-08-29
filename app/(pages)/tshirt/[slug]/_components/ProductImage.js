@@ -1,4 +1,5 @@
 "use client";
+import ReusableImage from "@/app/_components/ReusableImage";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -6,7 +7,7 @@ export default function ProductImage({ thumbnail, title, gallery }) {
   const [image, setImage] = useState(thumbnail);
   return (
     <div className="w-full md:w-[40%]">
-      <Image
+      <ReusableImage
         width={1200}
         height={1200}
         className="w-full h-[350px] object-cover"
@@ -14,24 +15,24 @@ export default function ProductImage({ thumbnail, title, gallery }) {
         alt={title}
       />
       {gallery.length > 0 && gallery && (
-        <div className="flex items-center gap-2 mt-2">
-          <Image
-            onClick={() => setImage(thumbnail)}
+        <div className="flex items-center gap-2 mt-12">
+          <ReusableImage
+            customClickHandler={() => setImage(thumbnail)}
             width={80}
             height={80}
             className="cursor-pointer p-[1px] bg-green-500 w-[80px] h-[80px] object-cover"
             src={thumbnail}
-            alt=""
+            alt={title || ""}
           />
           {gallery.map((galleryItem, index) => (
-            <Image
-              onClick={() => setImage(galleryItem)}
+            <ReusableImage
+              customClickHandler={() => setImage(galleryItem)}
               key={index}
               width={80}
               height={80}
               className="cursor-pointer p-[1px] bg-green-500 w-[80px] h-[80px] object-cover"
               src={galleryItem}
-              alt=""
+              alt={title || ""}
             />
           ))}
         </div>

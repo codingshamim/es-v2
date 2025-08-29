@@ -452,6 +452,7 @@ const makeCheckout = async (checkout) => {
         data: {
           orderId: formateMongo(response)[0]?._id,
           transactionId: formateMongo(response)[0]?.transactionId,
+          fee: formateMongo(response)[0]?.shippingOption?.fee || 0,
           name: checkout?.address?.name || "Customer",
         },
       };
