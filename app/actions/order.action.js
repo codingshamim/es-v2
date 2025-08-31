@@ -271,3 +271,42 @@ export const getOrderByLoggedinUser = async () => {
     };
   }
 };
+// SERVER ACTION (order.action.js)
+export const createOrderFromAdmin = async (order) => {
+  try {
+    await dbConnect();
+    const loggedAuth = await auth();
+    const userId = loggedAuth?.user?.id;
+    const isAdmin = await checkAdmin();
+
+    if (isAdmin) {
+      const newOrder = {
+        ...order,
+        user: userId, // This will be stored as text
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      const createOrder = await orderModel.create(newOrder);
+      console.log("Order created:", createOrder);
+
+      // Return success response
+      return {
+        error: false,
+        message: "Order created successfully!",
+        data: formateMongo(createOrder),
+      };
+    } else {
+      // This should be outside the if block
+      return {
+        error: true,
+        message: "Unauthorized! Admin access required.",
+      };
+    }
+  } catch (err) {
+    console.error("Order creation error:", err);
+    return {
+      error: true,
+      message: err?.message || "Failed to create order",
+    };
+  }
+};

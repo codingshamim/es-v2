@@ -34,6 +34,13 @@ export default function CommonProviders({ children }) {
       orderId: "",
       transactionId: "",
     },
+    selectedProducts: [],
+    selectedShippingOption: {
+      title: "Inside of Dhaka",
+      fee: 40,
+    },
+    payementMethod: "Bkash",
+    voucher: { amount: 0 },
   });
   const [checkout, setCheckout] = useState([]);
   const [discountPercentage, setDiscountPercentage] = useState(null);

@@ -1,3 +1,4 @@
+"use server";
 import formateMongo from "@/helpers/formateMongo";
 import { dbConnect } from "../connection/dbConnect";
 import { ProductModel } from "../models/ProductModel";
@@ -52,7 +53,7 @@ export default async function getProducts(query = "", limit = 10, page = 1) {
     };
   } catch (err) {
     console.error("Error fetching products:", err);
-    
+
     // IMPORTANT: Return the same structure with empty/default values
     return {
       error: true,

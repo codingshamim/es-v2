@@ -33,6 +33,8 @@ export async function getAllProducts(query, filter) {
       discount: 1,
       thumbnail: 1,
       description: 1,
+      sizes: 1,
+      sku: 1,
       _id: 1,
       slug: 1,
       stock: 1,

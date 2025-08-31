@@ -1,3 +1,4 @@
+import ReusableImage from "@/app/_components/ReusableImage";
 import { getProductByIdAction } from "@/app/backend/actions";
 import formatePrice from "@/helpers/formatePrice";
 import Image from "next/image";
@@ -8,12 +9,12 @@ export default async function OrderItem({ order }) {
   return (
     <div className="flex items-center space-x-6">
       <div className="relative">
-        <Image
+        <ReusableImage
           width={80}
           height={80}
           src={product?.thumbnail}
-          alt="Premium Cotton T-Shirt"
-          className="w-20 h-20 rounded-lg object-cover border-2 border-gray-600"
+          alt={product?.title || "Unknown title"}
+          className="w-20 h-20 rounded-lg  border-2 border-gray-600"
         />
         <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold text-white">
           {order?.quantity || 0}
