@@ -8,6 +8,7 @@ import { useEffect, useState, useMemo } from "react";
 import React from "react";
 import AddCart from "../AddCart";
 import mainPrice from "@/helpers/mainPrice";
+import ReusableImage from "@/app/_components/ReusableImage";
 
 const BuyModal = React.memo(function BuyModal() {
   const { common, setCommon } = useCommonState();
@@ -147,10 +148,10 @@ const BuyModal = React.memo(function BuyModal() {
               <div className="flex gap-4 items-start">
                 <div className="shrink-0">
                   {product?.thumbnail && (
-                    <Image
+                    <ReusableImage
                       width={120}
                       height={120}
-                      className="w-20 h-20 md:w-28 md:h-28 rounded-xl object-cover border border-gray-700"
+                      className="w-20 h-20 md:w-28 md:h-28 rounded-xl border border-gray-700"
                       src={product.thumbnail}
                       alt={product.title}
                     />

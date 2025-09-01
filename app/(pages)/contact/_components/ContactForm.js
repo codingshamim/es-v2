@@ -18,7 +18,9 @@ export default function ContactForm() {
       className="w-full md:w-1/2 min-h-screen py-[50px]"
     >
       <div className="flex justify-center items-center mb-2 flex-col">
-        <button className="btn">Contact Us</button>
+        <button type="button" className="btn">
+          Contact Us
+        </button>
         <p className="text-xs mb-2 mt-2 text-gray-300">
           Join now and be the first to discover our exclusive designs, special
           deals, and new arrivals!

@@ -26,7 +26,7 @@ export default function Footer() {
               </p>
               <p className="text-sm flex items-center">
                 <span className="text-gray-500 mr-2">📞</span>
-                +1 (123) 456-7890
+                +880 1816628413
               </p>
             </div>
           </div>
@@ -40,7 +40,7 @@ export default function Footer() {
                 className="text-gray-400 hover:text-white transition-colors duration-200 text-sm font-medium"
                 aria-label="Twitter"
               >
-                Twitter
+                Facebook
               </Link>
               <Link
                 href="#"

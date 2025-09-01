@@ -36,7 +36,7 @@ export default async function RecentOrders() {
   };
 
   return (
-    <div className="bg-dark-800 rounded-xl p-6 border border-gray-700">
+    <div className="bg-black rounded-xl p-6 border border-gray-700">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-semibold">Recent Orders</h3>
         <Link
@@ -52,7 +52,7 @@ export default async function RecentOrders() {
           orders?.orders?.map((order) => (
             <div
               key={order?._id}
-              className="flex items-center justify-between p-4 bg-dark-700 rounded-lg hover:bg-gray-700 transition-colors"
+              className="flex items-center justify-between p-4 bg-black rounded-lg hover:bg-secondary border border-gray-700 transition-colors"
             >
               <div className="flex items-center">
                 <div className="ml-4">

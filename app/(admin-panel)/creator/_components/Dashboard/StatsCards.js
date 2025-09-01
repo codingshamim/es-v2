@@ -7,7 +7,7 @@ export default async function StatsCards() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-      <div className="bg-dark-800 rounded-xl p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+      <div className="bg-black rounded-xl p-6 border border-gray-700 hover:border-blue-500 transition-colors">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-gray-400 text-sm">Total Orders</p>
@@ -41,7 +41,7 @@ export default async function StatsCards() {
           </div>
         </div>
       </div>
-      <div className="bg-dark-800 rounded-xl p-6 border border-gray-700 hover:border-green-500 transition-colors">
+      <div className="bg-black rounded-xl p-6 border border-gray-700 hover:border-green-500 transition-colors">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-gray-400 text-sm">Revenue</p>
@@ -74,7 +74,7 @@ export default async function StatsCards() {
           </div>
         </div>
       </div>
-      <div className="bg-dark-800 rounded-xl p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+      <div className="bg-black rounded-xl p-6 border border-gray-700 hover:border-purple-500 transition-colors">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-gray-400 text-sm">Total Item Sold</p>

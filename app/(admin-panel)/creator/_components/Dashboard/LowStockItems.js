@@ -1,6 +1,5 @@
+import ReusableImage from "@/app/_components/ReusableImage";
 import { lowStockItems } from "@/app/actions/dashboard.action";
-import formatePrice from "@/helpers/formatePrice";
-import Image from "next/image";
 
 export default async function LowStockItems() {
   const items = await lowStockItems();
@@ -8,7 +7,7 @@ export default async function LowStockItems() {
   return (
     <>
       {items?.products.length > 0 && (
-        <div className="bg-dark-800 rounded-xl p-6 border border-gray-700">
+        <div className="bg-black rounded-xl p-6 border border-gray-700">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Low Stock Alert</h3>
             <svg
@@ -31,15 +30,15 @@ export default async function LowStockItems() {
             {items?.products.map((product) => (
               <div
                 key={product?._id}
-                className="flex items-center justify-between p-4 bg-dark-700 rounded-lg hover:bg-black transition-colors"
+                className="flex items-center justify-between p-4 bg-black border border-gray-700 rounded-lg hover:bg-secondary transition-colors"
               >
                 <div className="flex items-center">
-                  <Image
+                  <ReusableImage
                     width={48}
                     height={48}
                     src={product?.thumbnail}
                     alt={product?.title || "Unknown title"}
-                    className="w-12 h-12 rounded-lg object-cover"
+                    className="w-12 h-12 rounded-lg "
                   />
                   <div className="ml-4">
                     <p className="font-medium text-white">

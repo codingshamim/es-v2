@@ -24,7 +24,7 @@ const dashboardStats = async () => {
         59,
         999
       );
-
+      await dbConnect();
       // Fetch all orders for comprehensive stats
       const allOrders = await orderModel.find({});
 
@@ -171,9 +171,9 @@ const lowStockItems = async () => {
 
 const recentOrder = async () => {
   try {
-    await dbConnect();
     const isAdmin = await checkAdmin();
     if (isAdmin) {
+      await dbConnect();
       const orders = await orderModel.find({}).sort({ createdAt: -1 }).limit(5);
       return {
         error: false,

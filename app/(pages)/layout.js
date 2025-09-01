@@ -7,6 +7,7 @@ import ToastContainer from "@/app/components/ToastContainer";
 
 import ModalContainer from "@/app/(pages)/tshirt/[slug]/_components/ModalContainer";
 import BuyModal from "../components/BuyModal/BuyModal";
+import CustomerSupportChat from "./_components/ChatBox/CustomerSupportChat";
 
 export const metadata = {
   // Basic SEO
@@ -210,6 +211,7 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="min-h-screen pb-[100px] dark:bg-[#000] dark:text-white max-w-5xl mx-auto py-6 px-6">
         <CommonProviders>
+          <CustomerSupportChat />
           <ToastContainer />
           <ModalContainer />
           <BuyModal />

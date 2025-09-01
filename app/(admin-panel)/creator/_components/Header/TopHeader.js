@@ -1,12 +1,16 @@
-
+import UserCredentials from "@/app/src/UserCredentials";
 import HamburgerButton from "./HamburgerButton";
+import UserIcon from "./UserIcon";
+import { auth } from "@/auth";
 
-export default function TopHeader() {
+export default async function TopHeader() {
+  const loggedAuth = await auth();
+  const user = await UserCredentials(loggedAuth?.user?.id);
   return (
     <header className="bg-[#1a1a1a] border-b border-gray-700">
       <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-3 h-auto min-h-16 px-4 py-3">
         {/* Sidebar toggle for small screens */}
-      <HamburgerButton/>
+        <HamburgerButton />
 
         {/* Search bar */}
         <div className="relative flex-1 min-w-[180px] max-w-md w-full">
@@ -33,29 +37,10 @@ export default function TopHeader() {
         </div>
 
         {/* Right side icons */}
-        <div className="flex items-center gap-3 ml-auto">
-          <button className="text-gray-400 hover:text-white relative">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={20}
-              height={20}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-bell"
-            >
-              <path d="M10.268 21a2 2 0 0 0 3.464 0" />
-              <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
-            </svg>
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
-          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-            <span className="text-sm font-semibold text-white">M</span>
-          </div>
-        </div>
+        <UserIcon
+          user={{ name: user?.name || "Unknow", role: user?.role || "Unknown" }}
+          icon={user?.name?.charAt(0) || "U"}
+        />
       </div>
     </header>
   );
