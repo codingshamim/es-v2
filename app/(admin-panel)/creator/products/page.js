@@ -10,7 +10,7 @@ import ProductItemPhone from "./_components/ProductItemPhone";
 
 export default async function page({ searchParams }) {
   const param = await searchParams;
-  
+
   // Extract pagination parameters
   const query = param?.query || "";
   const page = parseInt(param?.page) || 1;
@@ -19,13 +19,13 @@ export default async function page({ searchParams }) {
   const result = await getProducts(query, limit, page);
 
   // Safe destructuring with fallback values (works for both success and error)
-  const { 
-    products = [], 
-    totalItems = 0, 
-    currentPage = 1, 
+  const {
+    products = [],
+    totalItems = 0,
+    currentPage = 1,
     totalPages = 1,
     error = false,
-    message = ''
+    message = "",
   } = result || {};
 
   // Additional safety check
@@ -41,7 +41,7 @@ export default async function page({ searchParams }) {
   };
 
   return (
-    <div  className="p-6">
+    <div className="p-6">
       {/* Header Section */}
       <PageHeader
         title="Products"
@@ -53,24 +53,29 @@ export default async function page({ searchParams }) {
       <FilterAndSearch />
 
       {/* Products Table */}
-      <div className="bg-gradient-to-br from-dark-800/40 to-dark-900/40 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden shadow-2xl">
+      <div className="bg-black rounded-sm border border-gray-700/50 overflow-hidden shadow-2xl">
         {/* Table Header */}
-        <TableHeader 
-          title="Product Inventory" 
-          totalItems={`${totalItems} product${totalItems !== 1 ? 's' : ''}`} 
+        <TableHeader
+          title="Product Inventory"
+          totalItems={`${totalItems} product${totalItems !== 1 ? "s" : ""}`}
         />
 
         {safeProducts.length === 0 ? (
           // Empty State or Error State
           <div className="text-center py-12">
-            <div className={`text-lg mb-2 ${hasError ? 'text-red-400' : 'text-gray-400'}`}>
-              {hasError ? 'Error Loading Products' : 'No products found'}
+            <div
+              className={`text-lg mb-2 ${
+                hasError ? "text-red-400" : "text-gray-400"
+              }`}
+            >
+              {hasError ? "Error Loading Products" : "No products found"}
             </div>
             <div className="text-gray-500 text-sm">
-              {hasError 
-                ? message || 'Something went wrong'
-                : query ? `Try adjusting your search query "${query}"` : "Start by adding your first product"
-              }
+              {hasError
+                ? message || "Something went wrong"
+                : query
+                ? `Try adjusting your search query "${query}"`
+                : "Start by adding your first product"}
             </div>
           </div>
         ) : (
@@ -101,7 +106,7 @@ export default async function page({ searchParams }) {
 
         {/* Pagination - only show if there are products */}
         {safeProducts.length > 0 && (
-          <Pagination 
+          <Pagination
             totalProducts={totalItems}
             currentPage={currentPage}
             totalPages={totalPages}

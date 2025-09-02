@@ -1,9 +1,6 @@
-export default function TableHeader({
-  title = "",
-  totalItems = "0 Found",
-}) {
+export default function TableHeader({ title = "", totalItems = "0 Found" }) {
   return (
-    <div className="bg-gradient-to-r from-dark-800/80 to-dark-700/80 px-4 lg:px-6 py-4 border-b border-gray-700/50">
+    <div className="bg-black px-4 lg:px-6 py-4 border-b border-gray-700/50">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-white">{title}</h3>
         <div className="flex items-center space-x-4">

@@ -1,10 +1,9 @@
 export default function TableHeaderDesktop() {
   return (
-    <thead className="bg-gradient-to-r from-dark-700/60 to-dark-800/60">
+    <thead className="bg-black border border-gray-700/50">
       <tr>
         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
           <div className="flex items-center space-x-2">
-          
             <span>Product</span>
           </div>
         </th>
@@ -32,7 +31,7 @@ export default function TableHeaderDesktop() {
           </svg>
         </th>
         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider cursor-pointer hover:text-white">
-          Stock  
+          Stock
         </th>
         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
           Status

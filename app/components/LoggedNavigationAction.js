@@ -6,7 +6,7 @@ import { TopbarActionDat } from "../info/TopbarActionsJson";
 import Link from "next/link";
 import LogOutButton from "./LogOutButton";
 
-export default function LoggedNavigationAction({ children }) {
+export default function LoggedNavigationAction({ children, isAdmin }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const modalRef = useRef(null);
@@ -101,23 +101,29 @@ export default function LoggedNavigationAction({ children }) {
           {/* Menu Items */}
           <div className="p-2">
             <ul className="space-y-1">
-              {TopbarActionDat.map((item, index) => (
-                <li key={item.id} onClick={() => setIsOpen(false)}>
-                  <Link href={item.link}>
-                    {" "}
-                    <div className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:bg-gray-800/50 hover:text-white rounded-lg transition-all duration-200 cursor-pointer group">
-                      <div className="text-gray-400 group-hover:text-white transition-colors">
-                        {item.icon}
+              {TopbarActionDat.map((item, index) => {
+                // Hide /creator if not admin
+                if (item.link === "/creator" && !isAdmin) return null;
+
+                return (
+                  <li key={item.id} onClick={() => setIsOpen(false)}>
+                    <Link href={item.link}>
+                      <div className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:bg-gray-800/50 hover:text-white rounded-lg transition-all duration-200 cursor-pointer group">
+                        <div className="text-gray-400 group-hover:text-white transition-colors">
+                          {item.icon}
+                        </div>
+                        <span className="text-sm font-medium">
+                          {item.title}
+                        </span>
                       </div>
-                      <span className="text-sm font-medium">{item.title}</span>
-                    </div>
-                    {/* Separator line except for last item */}
-                    {index < TopbarActionDat.length - 1 && (
-                      <div className="h-px bg-gray-700 mx-3 my-1" />
-                    )}
-                  </Link>
-                </li>
-              ))}
+                      {/* Separator line except for last item */}
+                      {index < TopbarActionDat.length - 1 && (
+                        <div className="h-px bg-gray-700 mx-3 my-1" />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

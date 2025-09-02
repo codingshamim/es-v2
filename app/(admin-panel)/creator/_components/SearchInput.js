@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SearchInput() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('query') || '');
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("query") || "");
 
   // Debounce logic
   useEffect(() => {
     const handler = setTimeout(() => {
       const params = new URLSearchParams();
       if (searchTerm.trim()) {
-        params.set('query', searchTerm.trim());
+        params.set("query", searchTerm.trim());
       }
 
       // Push new query string to the URL
@@ -23,10 +23,10 @@ export default function SearchInput() {
     return () => {
       clearTimeout(handler); // clear previous timeout
     };
-  }, [searchTerm,router]);
+  }, [searchTerm, router]);
 
   return (
-    <div className="relative flex-1 sm:flex-none sm:w-80">
+    <div className="relative flex-1 sm:flex-none w-[80%]">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={24}
@@ -49,7 +49,7 @@ export default function SearchInput() {
         placeholder="Search products..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="bg-dark-800/80 border border-gray-600/50 rounded-sm pl-12 pr-4 py-3 w-full focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-transparent transition-all duration-200"
+        className="bg-black w-full border border-gray-600/50 rounded-sm pl-12 pr-4 py-3 w-full focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent transition-all duration-200"
       />
     </div>
   );
