@@ -7,6 +7,7 @@ import generateTransactionId from "@/helpers/generateTransactionId";
 import DashboardHeader from "../../../_components/Dashboard/DashboardHeader";
 import { createOrderFromAdmin } from "@/app/actions/order.action";
 import { useRouter } from "next/navigation";
+import { createNotification } from "@/app/backend/actions/notification.action";
 
 export default function OrderCreatorForm({ children }) {
   const { common, setCommon } = useCommonState();
@@ -97,6 +98,12 @@ export default function OrderCreatorForm({ children }) {
 
       const apiResponse = await createOrderFromAdmin(orderObject);
       setResponse(apiResponse);
+
+      await createNotification({
+        title: "New Order Received",
+        message: `You have a new order from customer ${apiResponse?.data?.address?.phone}`,
+        type: "order",
+      });
       router.push(`/creator/order/${apiResponse?.data?.transactionId}`);
       if (!apiResponse.error) {
         // Reset form on success

@@ -2,6 +2,7 @@ import formatePrice from "@/helpers/formatePrice";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteProductButton from "./DeleteProductButton";
+import ReusableImage from "@/app/_components/ReusableImage";
 
 export default function ProductItemPhone({ product }) {
   return (
@@ -11,12 +12,12 @@ export default function ProductItemPhone({ product }) {
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <Image
+              <ReusableImage
                 width={80}
                 height={80}
                 src={product.thumbnail}
                 alt={product.title}
-                className="w-20 h-20 rounded-2xl object-cover border-2 border-gray-600/50"
+                className="w-20 h-20 rounded-2xl border-2 border-gray-600/50"
               />
               <div
                 className={`absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center ${

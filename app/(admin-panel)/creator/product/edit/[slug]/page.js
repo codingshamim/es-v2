@@ -329,8 +329,6 @@ export default function ProductEditPage({ params }) {
         status: formData.status,
       };
 
-    
-
       const result = await updateProductAction(originalSlug, cleanedData);
 
       if (result.error) {

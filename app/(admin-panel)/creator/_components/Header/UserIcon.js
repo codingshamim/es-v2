@@ -1,8 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import { doSignOut } from "@/app/backend/actions";
+import {
+  getNotifications,
+  markNotificationAsRead,
+  markAllNotificationsAsRead,
+} from "@/app/backend/actions/notification.action";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 export default function UserIcon({
   icon,
@@ -13,54 +18,124 @@ export default function UserIcon({
 }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [markingAllAsRead, setMarkingAllAsRead] = useState(false);
+
   const userDropdownRef = useRef(null);
   const notificationRef = useRef(null);
-
-  // Sample notification data - replace with your actual data
-  const notifications = [
-    {
-      id: 1,
-      title: "New Order Received",
-      message: "You have a new order from customer #12345",
-      time: "2 minutes ago",
-      isRead: false,
-      type: "order",
-    },
-    {
-      id: 2,
-      title: "Payment Confirmed",
-      message: "Payment of $299.99 has been processed successfully",
-      time: "1 hour ago",
-      isRead: false,
-      type: "payment",
-    },
-    {
-      id: 3,
-      title: "System Update",
-      message: "Your dashboard has been updated with new features",
-      time: "3 hours ago",
-      isRead: true,
-      type: "system",
-    },
-    {
-      id: 4,
-      title: "Message from Support",
-      message: "Your ticket #ST-001 has been resolved",
-      time: "1 day ago",
-      isRead: true,
-      type: "support",
-    },
-    {
-      id: 5,
-      title: "Welcome!",
-      message: "Welcome to your new dashboard. Explore all the features.",
-      time: "2 days ago",
-      isRead: true,
-      type: "welcome",
-    },
-  ];
+  const notificationListRef = useRef(null);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
+
+  // Format time ago
+  const formatTimeAgo = (date) => {
+    const now = new Date();
+    const notificationDate = new Date(date);
+    const diffInSeconds = Math.floor((now - notificationDate) / 1000);
+
+    if (diffInSeconds < 60) return "Just now";
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+    if (diffInSeconds < 86400)
+      return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    if (diffInSeconds < 604800)
+      return `${Math.floor(diffInSeconds / 86400)}d ago`;
+
+    return notificationDate.toLocaleDateString();
+  };
+
+  // Load notifications
+  const loadNotifications = useCallback(async (pageNum = 1, reset = false) => {
+    try {
+      if (pageNum === 1) {
+        setLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
+
+      const result = await getNotifications(pageNum, 10);
+
+      if (result.ok) {
+        if (reset || pageNum === 1) {
+          setNotifications(result.data);
+          setPage(1);
+        } else {
+          setNotifications((prev) => [...prev, ...result.data]);
+        }
+        setHasMore(result.pagination?.hasMore || false);
+      } else {
+        console.error("Error loading notifications:", result.message);
+      }
+    } catch (error) {
+      console.error("Error loading notifications:", error);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, []);
+
+  // Load notifications when dropdown opens
+  useEffect(() => {
+    if (isNotificationOpen && notifications.length === 0) {
+      setPage(1);
+      loadNotifications(1, true);
+    }
+  }, [isNotificationOpen, loadNotifications]);
+
+  // Infinite scroll handler for notification dropdown
+  const handleNotificationScroll = useCallback(
+    (e) => {
+      const element = e.target;
+      if (element && !loadingMore && hasMore) {
+        const { scrollTop, scrollHeight, clientHeight } = element;
+        if (scrollTop + clientHeight >= scrollHeight - 20) {
+          const nextPage = page + 1;
+          setPage(nextPage);
+          loadNotifications(nextPage, false);
+        }
+      }
+    },
+    [loadingMore, hasMore, page, loadNotifications]
+  );
+
+  // Mark single notification as read
+  const handleMarkAsRead = async (notificationId, e) => {
+    e.stopPropagation();
+    try {
+      const result = await markNotificationAsRead(notificationId);
+      if (result.ok) {
+        setNotifications((prev) =>
+          prev.map((notification) =>
+            notification._id === notificationId
+              ? { ...notification, isRead: true }
+              : notification
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+    }
+  };
+
+  // Mark all notifications as read
+  const handleMarkAllAsRead = async () => {
+    try {
+      setMarkingAllAsRead(true);
+      const result = await markAllNotificationsAsRead();
+      if (result.ok) {
+        setNotifications((prev) =>
+          prev.map((notification) => ({ ...notification, isRead: true }))
+        );
+      }
+    } catch (error) {
+      console.error("Error marking all notifications as read:", error);
+    } finally {
+      setMarkingAllAsRead(false);
+    }
+  };
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -92,9 +167,25 @@ export default function UserIcon({
 
   const getNotificationIcon = (type) => {
     switch (type) {
-      case "order":
+      case "welcome":
         return (
           <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+            <svg
+              width={14}
+              height={14}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="text-white"
+            >
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+            </svg>
+          </div>
+        );
+      case "order":
+        return (
+          <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
             <svg
               width={14}
               height={14}
@@ -108,23 +199,7 @@ export default function UserIcon({
             </svg>
           </div>
         );
-      case "payment":
-        return (
-          <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-            <svg
-              width={14}
-              height={14}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              className="text-white"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-          </div>
-        );
-      case "system":
+      case "promotion":
         return (
           <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
             <svg
@@ -136,14 +211,14 @@ export default function UserIcon({
               strokeWidth={2}
               className="text-white"
             >
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-              <circle cx="12" cy="12" r="3" />
+              <path d="m3 11 18-5v12L3 14v-3z" />
+              <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
             </svg>
           </div>
         );
-      case "support":
+      case "reminder":
         return (
-          <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">
+          <div className="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center">
             <svg
               width={14}
               height={14}
@@ -153,7 +228,25 @@ export default function UserIcon({
               strokeWidth={2}
               className="text-white"
             >
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12,6 12,12 16,14" />
+            </svg>
+          </div>
+        );
+      case "system":
+        return (
+          <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+            <svg
+              width={14}
+              height={14}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="text-white"
+            >
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+              <circle cx="12" cy="12" r="3" />
             </svg>
           </div>
         );
@@ -169,7 +262,8 @@ export default function UserIcon({
               strokeWidth={2}
               className="text-white"
             >
-              <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
             </svg>
           </div>
         );
@@ -224,42 +318,112 @@ export default function UserIcon({
             </div>
 
             {/* Notification List */}
-            <div className="max-h-80 overflow-y-auto">
-              {notifications.length > 0 ? (
-                notifications.map((notification) => (
-                  <div
-                    key={notification.id}
-                    className={`p-4 border-b border-gray-800 hover:bg-gray-900 transition-colors cursor-pointer ${
-                      !notification.isRead ? "bg-gray-900/50" : ""
-                    }`}
-                  >
-                    <div className="flex gap-3">
-                      {getNotificationIcon(notification.type)}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2">
-                          <h4
-                            className={`text-sm font-medium ${
-                              notification.isRead
-                                ? "text-gray-300"
-                                : "text-white"
-                            }`}
-                          >
-                            {notification.title}
-                          </h4>
-                          {!notification.isRead && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-2"></div>
-                          )}
+            <div
+              ref={notificationListRef}
+              className="max-h-80 overflow-y-auto"
+              onScroll={handleNotificationScroll}
+            >
+              {loading ? (
+                // Loading skeleton
+                <div className="space-y-0">
+                  {[...Array(3)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="p-4 border-b border-gray-800 animate-pulse"
+                    >
+                      <div className="flex gap-3">
+                        <div className="w-8 h-8 bg-gray-700 rounded-full"></div>
+                        <div className="flex-1 space-y-2">
+                          <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+                          <div className="h-3 bg-gray-700 rounded w-1/2"></div>
+                          <div className="h-2 bg-gray-700 rounded w-1/4"></div>
                         </div>
-                        <p className="text-xs text-gray-400 mt-1 line-clamp-2">
-                          {notification.message}
-                        </p>
-                        <span className="text-xs text-gray-500 mt-2 block">
-                          {notification.time}
-                        </span>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))}
+                </div>
+              ) : notifications.length > 0 ? (
+                <>
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification._id}
+                      className={`p-4 border-b border-gray-800 hover:bg-gray-900 transition-colors cursor-pointer relative group ${
+                        !notification.isRead ? "bg-gray-900/50" : ""
+                      }`}
+                      onClick={() =>
+                        !notification.isRead &&
+                        handleMarkAsRead(notification._id, {
+                          stopPropagation: () => {},
+                        })
+                      }
+                    >
+                      <div className="flex gap-3">
+                        {getNotificationIcon(notification.type)}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <h4
+                              className={`text-sm font-medium ${
+                                notification.isRead
+                                  ? "text-gray-300"
+                                  : "text-white"
+                              }`}
+                            >
+                              {notification.title}
+                            </h4>
+                            {!notification.isRead && (
+                              <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-2"></div>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+                            {notification.message}
+                          </p>
+                          <span className="text-xs text-gray-500 mt-2 block">
+                            {formatTimeAgo(notification.createdAt)}
+                          </span>
+                        </div>
+                        {!notification.isRead && (
+                          <button
+                            onClick={(e) =>
+                              handleMarkAsRead(notification._id, e)
+                            }
+                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-all"
+                            title="Mark as read"
+                          >
+                            <svg
+                              width={12}
+                              height={12}
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <polyline points="20,6 9,17 4,12" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Loading More Indicator */}
+                  {loadingMore && (
+                    <div className="p-4 text-center">
+                      <div className="inline-flex items-center space-x-2 text-gray-400">
+                        <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-xs">Loading more...</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* End of List Indicator */}
+                  {!hasMore && notifications.length > 5 && (
+                    <div className="p-4 text-center">
+                      <p className="text-gray-500 text-xs">
+                        You've seen all notifications
+                      </p>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="p-6 text-center">
                   <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -285,14 +449,15 @@ export default function UserIcon({
             </div>
 
             {/* Footer */}
-            {notifications.length > 0 && (
+            {notifications.length > 0 && unreadCount > 0 && (
               <div className="p-3 border-t border-gray-800">
                 <div className="flex gap-2">
-                  <button className="flex-1 text-xs text-gray-400 hover:text-white transition-colors py-2 hover:bg-gray-800 rounded">
-                    Mark all as read
-                  </button>
-                  <button className="flex-1 text-xs text-gray-400 hover:text-white transition-colors py-2 hover:bg-gray-800 rounded">
-                    View all
+                  <button
+                    onClick={handleMarkAllAsRead}
+                    disabled={markingAllAsRead}
+                    className="flex-1 text-xs text-gray-400 hover:text-white transition-colors py-2 hover:bg-gray-800 rounded disabled:opacity-50"
+                  >
+                    {markingAllAsRead ? "Marking..." : "Mark all as read"}
                   </button>
                 </div>
               </div>

@@ -287,7 +287,6 @@ export const createOrderFromAdmin = async (order) => {
         updatedAt: new Date(),
       };
       const createOrder = await orderModel.create(newOrder);
-      console.log("Order created:", createOrder);
 
       // Return success response
       return {

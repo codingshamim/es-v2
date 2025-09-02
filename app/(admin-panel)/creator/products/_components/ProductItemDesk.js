@@ -3,6 +3,7 @@ import mainPrice from "@/helpers/mainPrice";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteProductButton from "./DeleteProductButton";
+import ReusableImage from "@/app/_components/ReusableImage";
 
 export default function ProductItemDesk({ product }) {
   return (
@@ -10,12 +11,12 @@ export default function ProductItemDesk({ product }) {
       <td className="px-6 py-6">
         <div className="flex items-center">
           <div className="relative">
-            <Image
+            <ReusableImage
               src={product.thumbnail}
               alt={product.title}
               width={64}
               height={64}
-              className="w-16 h-16 rounded-2xl object-cover border-2 border-gray-600/50 group-hover:border-blue-500/50 transition-colors"
+              className="w-16 h-16 rounded-2xl  border-2 border-gray-600/50 group-hover:border-blue-500/50 transition-colors"
             />
             <div
               className={`absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center ${
@@ -141,7 +142,8 @@ export default function ProductItemDesk({ product }) {
               <circle cx={12} cy={12} r={3} />
             </svg>
           </Link>
-          <Link href={`/creator/product/edit/${product.slug}`}
+          <Link
+            href={`/creator/product/edit/${product.slug}`}
             className="p-2 text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 rounded-lg transition-all duration-200 tooltip"
             title="Edit Product"
           >

@@ -30,7 +30,7 @@ export default async function OrderItem({ order }) {
         </div>
         {order?.quantity > 1 && (
           <div className="text-xs text-gray-400">
-            ${(order?.price * order?.quantity).toFixed(2)} total
+            {mainPrice((order?.price * order?.quantity).toFixed(2))} total
           </div>
         )}
       </div>

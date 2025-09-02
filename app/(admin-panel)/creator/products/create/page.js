@@ -203,7 +203,6 @@ export default function ProductCreatePage() {
       // Simulate upload delay
       setTimeout(() => setIsUploading(false), 1000);
     } catch (error) {
-     
       alert("Upload failed. Please try again.");
       setIsUploading(false);
     }
@@ -255,8 +254,6 @@ export default function ProductCreatePage() {
         status: formData.status,
       };
 
- 
-
       const result = await createProduct(cleanedData);
 
       if (result.error) {
@@ -265,7 +262,6 @@ export default function ProductCreatePage() {
       }
 
       // Success - redirect to product page
-    
 
       if (result.slug) {
         router.push(`/tshirt/${result.slug}`);
