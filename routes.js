@@ -7,6 +7,5 @@ export const PUBLIC_ROUTES = [
   "/shop",
   "/tshirt",
   "/contact",
-  "/checkout",
-  "/cart",
+  "/forgot-password",
 ];

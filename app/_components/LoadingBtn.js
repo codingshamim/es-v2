@@ -3,14 +3,13 @@ export default function LoadingBtn({
   children,
   customClass,
   onEvent,
-
 }) {
   return (
     <>
       <button
         disabled={loading}
         onClick={onEvent}
-        className={`${customClass} anim-btn bg-white text-black ${
+        className={`${customClass} anim-btn  bg-white text-black ${
           loading || "hover:bg-[#cacaca] "
         }`}
       >

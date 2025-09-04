@@ -29,6 +29,10 @@ const userSchema = new Schema({
     type: Object,
     required: false,
   },
+  otp: {
+    type: Number,
+    required: false,
+  },
 });
 export const UserModel =
   mongoose.models.users ?? mongoose.model("users", userSchema);

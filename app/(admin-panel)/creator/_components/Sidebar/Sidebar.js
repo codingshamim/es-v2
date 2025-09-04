@@ -83,6 +83,31 @@ export const sidebarList = [
   },
 
   {
+    title: "Categories",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={18}
+        height={18}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="lucide lucide-list-todo-icon lucide-list-todo"
+      >
+        <path d="M13 5h8" />
+        <path d="M13 12h8" />
+        <path d="M13 19h8" />
+        <path d="m3 17 2 2 4-4" />
+        <rect x={3} y={4} width={6} height={6} rx={1} />
+      </svg>
+    ),
+    items: [],
+    target: "/creator/categories",
+  },
+  {
     title: "Inbox",
     svg: (
       <svg

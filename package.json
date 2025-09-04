@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "node server.mjs --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.mjs",
     "lint": "next lint"
   },
   "dependencies": {
@@ -19,6 +19,8 @@
     "or": "^0.2.0",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "sslcommerz-lts": "^1.2.0"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import { updateProductAction } from "@/app/actions/product.action";
 import { useState, useRef, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import getProductBySlug from "@/app/backend/queries/getProductBySlug";
+import ReusableImage from "@/app/_components/ReusableImage";
 
 export default function ProductEditPage({ params }) {
   const router = useRouter();
@@ -735,10 +736,12 @@ export default function ProductEditPage({ params }) {
                     <div className="relative">
                       {thumbnailPreview ? (
                         <div className="relative group">
-                          <img
+                          <ReusableImage
+                            width={192}
+                            height={192}
                             src={thumbnailPreview}
                             alt="Thumbnail preview"
-                            className="w-full h-48 object-cover rounded-xl border-2 border-gray-600"
+                            className="w-full   border-2 border-gray-600"
                           />
                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl flex items-center justify-center">
                             <button
@@ -849,10 +852,12 @@ export default function ProductEditPage({ params }) {
                         <div key={index} className="space-y-2">
                           {galleryPreviews[index] ? (
                             <div className="relative group">
-                              <img
+                              <ReusableImage
+                                width={192}
+                                height={192}
                                 src={galleryPreviews[index]}
                                 alt={`Gallery ${index + 1}`}
-                                className="w-full h-32 object-cover rounded-lg border border-gray-600"
+                                className="w-full   border border-gray-600"
                               />
                               <button
                                 type="button"

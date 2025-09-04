@@ -3,6 +3,10 @@
 import { createProduct } from "@/app/actions/product.action";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import ReusableImage from "@/app/_components/ReusableImage";
+import Image from "next/image";
+import BasicInformation from "../_components/BasicInformation";
+import Categories from "./_components/Categories";
 
 export default function ProductCreatePage() {
   const router = useRouter();
@@ -32,14 +36,6 @@ export default function ProductCreatePage() {
   const thumbnailInputRef = useRef(null);
   const galleryInputRefs = useRef([]);
 
-  const categories = [
-    "Hoodie",
-    "T-Shirt",
-    "Jacket",
-    "Pants",
-    "Accessories",
-    "Shoes",
-  ];
   const sizeOptions = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 
   const validateField = (field, value) => {
@@ -156,8 +152,8 @@ export default function ProductCreatePage() {
     setFormData((prev) => ({
       ...prev,
       [field]: prev[field].includes(value)
-        ? prev[field].filter((item) => item !== value)
-        : [...prev[field], value],
+        ? prev[field].filter((item) => item !== value) // remove
+        : [...prev[field], value], // add
     }));
   };
 
@@ -323,137 +319,11 @@ export default function ProductCreatePage() {
             {/* Left Column - Product Information */}
             <div className="xl:col-span-2 space-y-6">
               {/* Basic Information */}
-              <div className="backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 shadow-xl">
-                <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  Product Information
-                </h3>
-
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-3">
-                      Product Title *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.title}
-                      onChange={(e) =>
-                        handleInputChange("title", e.target.value)
-                      }
-                      className={`w-full bg-transparent border ${
-                        errors.title ? "border-red-500" : "border-gray-600"
-                      } rounded-sm px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
-                      placeholder="Enter product title"
-                      required
-                    />
-                    {errors.title && (
-                      <p className="text-red-400 text-sm mt-1">
-                        {errors.title}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-3">
-                      Description *
-                    </label>
-                    <textarea
-                      value={formData.description}
-                      onChange={(e) =>
-                        handleInputChange("description", e.target.value)
-                      }
-                      rows={4}
-                      className={`w-full bg-transparent border ${
-                        errors.description
-                          ? "border-red-500"
-                          : "border-gray-600"
-                      } rounded-sm px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none`}
-                      placeholder="Enter product description"
-                      required
-                    />
-                    {errors.description && (
-                      <p className="text-red-400 text-sm mt-1">
-                        {errors.description}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Price (৳) *
-                      </label>
-                      <input
-                        type="number"
-                        value={formData.price}
-                        onChange={(e) =>
-                          handleInputChange("price", e.target.value)
-                        }
-                        className={`w-full bg-transparent border ${
-                          errors.price ? "border-red-500" : "border-gray-600"
-                        } rounded-sm px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
-                        placeholder="0"
-                        required
-                        min="0"
-                        step="0.01"
-                      />
-                      {errors.price && (
-                        <p className="text-red-400 text-sm mt-1">
-                          {errors.price}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Discount (%)
-                      </label>
-                      <input
-                        type="number"
-                        value={formData.discount}
-                        onChange={(e) =>
-                          handleInputChange("discount", e.target.value)
-                        }
-                        className={`w-full bg-transparent border ${
-                          errors.discount ? "border-red-500" : "border-gray-600"
-                        } rounded-sm px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
-                        placeholder="0"
-                        min="0"
-                        max="100"
-                      />
-                      {errors.discount && (
-                        <p className="text-red-400 text-sm mt-1">
-                          {errors.discount}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Stock *
-                      </label>
-                      <input
-                        type="number"
-                        value={formData.stock}
-                        onChange={(e) =>
-                          handleInputChange("stock", e.target.value)
-                        }
-                        className={`w-full bg-transparent border ${
-                          errors.stock ? "border-red-500" : "border-gray-600"
-                        } rounded-sm px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
-                        placeholder="0"
-                        required
-                        min="0"
-                      />
-                      {errors.stock && (
-                        <p className="text-red-400 text-sm mt-1">
-                          {errors.stock}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <BasicInformation
+                handleInputChange={handleInputChange}
+                formData={formData}
+                errors={errors}
+              />
 
               {/* Product Variants */}
               <div className="backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 shadow-xl">
@@ -492,35 +362,10 @@ export default function ProductCreatePage() {
                       ))}
                     </div>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-3">
-                      Categories
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {categories.map((category) => (
-                        <label key={category} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            checked={formData.category.includes(category)}
-                            onChange={() =>
-                              handleCheckboxChange("category", category)
-                            }
-                            className="sr-only"
-                          />
-                          <div
-                            className={`w-full py-2 px-4 rounded-lg border-2 text-center cursor-pointer transition-all duration-200 ${
-                              formData.category.includes(category)
-                                ? "border-blue-500 bg-transparent text-blue-400"
-                                : "border-gray-600 bg-transparent text-gray-300 hover:border-gray-500"
-                            }`}
-                          >
-                            {category}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
+                  <Categories
+                    formData={formData}
+                    handleCheckboxChange={handleCheckboxChange}
+                  />
                 </div>
               </div>
 
@@ -601,7 +446,7 @@ export default function ProductCreatePage() {
             {/* Right Column - Images & Settings */}
             <div className="space-y-6">
               {/* Product Images */}
-              <div className="bg-transparent backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 shadow-xl">
+              <div className="bg-transparent backdrop-blur-xl  p-6 border border-gray-700/50 shadow-xl">
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
                   <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
                   Product Images
@@ -616,13 +461,16 @@ export default function ProductCreatePage() {
 
                     <div className="relative">
                       {thumbnailPreview ? (
-                        <div className="relative group">
-                          <img
+                        <div className="relative group overflow-hidden">
+                          <ReusableImage
+                            width={192}
+                            height={192}
                             src={thumbnailPreview}
                             alt="Thumbnail preview"
-                            className="w-full h-48 object-cover rounded-xl border-2 border-gray-600"
+                            imageClassName=" w-full h-full"
+                            className="  border-gray-600"
                           />
-                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl flex items-center justify-center">
+                          <div className="absolute  inset-0  opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl ">
                             <button
                               type="button"
                               onClick={() => {
@@ -652,7 +500,7 @@ export default function ProductCreatePage() {
                       ) : (
                         <div
                           onClick={() => thumbnailInputRef.current?.click()}
-                          className={`w-full h-48 border-2 border-dashed ${
+                          className={`w-full h-[192px] border-2 border-dashed ${
                             errors.thumbnail
                               ? "border-red-500"
                               : "border-gray-600"
@@ -732,10 +580,12 @@ export default function ProductCreatePage() {
                         <div key={index} className="space-y-2">
                           {galleryPreviews[index] ? (
                             <div className="relative group">
-                              <img
+                              <Image
+                                width={192}
+                                height={192}
                                 src={galleryPreviews[index]}
                                 alt={`Gallery ${index + 1}`}
-                                className="w-full h-32 object-cover rounded-lg border border-gray-600"
+                                className="w-full border border-gray-600"
                               />
                               <button
                                 type="button"

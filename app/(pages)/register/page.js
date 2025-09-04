@@ -8,11 +8,11 @@ export const metadata = {
 export default function page() {
   return (
     <AnimationContainer>
-      <main className="w-full flex justify-center items-center">
-        <section className="w-full md:w-1/2 min-h-screen py-[50px]">
+      <main className="w-full flex justify-center min-h-[80vh]  items-center">
+        <section className="w-full md:w-1/2  py-[50px]">
           <div className="flex justify-center items-center mb-2 flex-col">
-            <button className="btn">Create Account</button>
-            <p className="text-xs mb-2 mt-2 text-gray-300">
+            <span className="border new-variable-btn">Create Account</span>
+            <p className="text-sm text-center mb-2 mt-2 text-gray-300">
               Join now and be the first to discover our exclusive designs,
               special deals, and new arrivals!
             </p>

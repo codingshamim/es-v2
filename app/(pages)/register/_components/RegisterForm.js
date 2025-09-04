@@ -1,6 +1,7 @@
 "use client";
 import LoadingBtn from "@/app/_components/LoadingBtn";
 import { createUserAction } from "@/app/backend/actions";
+import { UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -193,7 +194,11 @@ export default function RegisterForm({ children }) {
         )}
       </div>
       {children}
-      <LoadingBtn customClass="mt-2" loading={loading}>
+      <LoadingBtn
+        customClass="mt-4 font-medium flex items-center gap-2 justify-center !py-[7px] w-full "
+        loading={loading}
+      >
+        <UserPlus width={18} height={18} />
         Register
       </LoadingBtn>
     </form>

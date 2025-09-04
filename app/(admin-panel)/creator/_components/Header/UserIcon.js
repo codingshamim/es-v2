@@ -83,7 +83,7 @@ export default function UserIcon({
       setPage(1);
       loadNotifications(1, true);
     }
-  }, [isNotificationOpen, loadNotifications]);
+  }, [isNotificationOpen, loadNotifications, notifications.length]);
 
   // Infinite scroll handler for notification dropdown
   const handleNotificationScroll = useCallback(

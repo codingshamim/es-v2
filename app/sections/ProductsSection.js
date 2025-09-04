@@ -11,7 +11,7 @@ export default async function ProductsSection() {
         <section className="min-h-screen py-[50px]">
           <PageTitle
             title="Our Products"
-            subTitle="Check out our latest products"
+            subTitle="Discover a wide range of products designed to bring comfort, style, and quality into your everyday life."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             {products.length > 0 && products

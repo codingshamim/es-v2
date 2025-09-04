@@ -7,7 +7,10 @@ import ToastContainer from "@/app/components/ToastContainer";
 
 import ModalContainer from "@/app/(pages)/tshirt/[slug]/_components/ModalContainer";
 import BuyModal from "../components/BuyModal/BuyModal";
-import CustomerSupportChat from "./_components/ChatBox/CustomerSupportChat";
+
+import ChatToggleButton from "./_components/ChatToggleButton";
+import CustomerSupportChat from "./_components/CustomerSupportChat";
+import { auth } from "@/auth";
 
 export const metadata = {
   // Basic SEO
@@ -154,6 +157,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+  const user = await auth();
   return (
     <html lang="en">
       <head>
@@ -210,11 +214,13 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen pb-[100px] dark:bg-[#000] dark:text-white max-w-5xl mx-auto py-6 px-6">
-        <CommonProviders>
+        <CommonProviders authenticatedUser={user?.user.id || null}>
+          <ChatToggleButton />
           <CustomerSupportChat />
           <ToastContainer />
           <ModalContainer />
           <BuyModal />
+
           {/* top navbar start  */}
           <TopNavigation />
           {/* top navbar end  */}

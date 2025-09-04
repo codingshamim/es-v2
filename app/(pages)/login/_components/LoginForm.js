@@ -1,6 +1,7 @@
 "use client";
 import LoadingBtn from "@/app/_components/LoadingBtn";
 import { ceredntialLogin } from "@/app/backend/actions";
+import { LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -136,7 +137,11 @@ export default function LoginForm({ children }) {
         )}
       </div>
       <div>{children}</div>
-      <LoadingBtn loading={loading} customClass="mt-2">
+      <LoadingBtn
+        loading={loading}
+        customClass="mt-2 font-medium flex items-center justify-center gap-2 !py-[7px] w-full"
+      >
+        <LogIn width={18} height={18} />
         Login
       </LoadingBtn>
     </form>
