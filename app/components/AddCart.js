@@ -88,12 +88,12 @@ export default function AddCart({ quantity, productId, size }) {
     <SecondaryLoadingBtn
       loading={loading}
       onClick={handler}
-      className="py-2 hover:bg-[#e0e0e0] flex items-center w-[140px] gap-2 px-4 font-medium active:scale-[98%] transition-all duration-300 rounded-sm bg-white text-black text-sm"
+      className="py-2 hover:bg-[#e0e0e0]  justify-center flex items-center w-[140px] gap-1 px-4 font-medium active:scale-[98%] transition-all duration-300 rounded-sm bg-white text-black text-sm"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={16}
-        height={16}
+        width={18}
+        height={18}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"

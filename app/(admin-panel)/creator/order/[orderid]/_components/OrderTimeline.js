@@ -9,7 +9,7 @@ export default function OrderTimeline({ status = "Pending", createdAt }) {
   if (status === "Cancelled") {
     return (
       <div className="mb-8">
-        <div className="bg-secondary rounded-lg p-8 border border-red-800">
+        <div className="bg-black rounded-lg p-8 border border-red-800">
           <h3 className="text-xl font-semibold text-white mb-8 flex items-center">
             <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center mr-3">
               <svg
@@ -58,7 +58,7 @@ export default function OrderTimeline({ status = "Pending", createdAt }) {
               Your order has been cancelled and will not be processed.
             </p>
 
-            <div className="bg-red-900/30 border border-red-800 rounded-lg p-4 text-left">
+            <div className="bg-red-900/30 border border-white rounded-lg p-4 text-left">
               <div className="flex items-start space-x-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -108,17 +108,17 @@ export default function OrderTimeline({ status = "Pending", createdAt }) {
 
   return (
     <div className="mb-8">
-      <div className="bg-secondary rounded-lg p-8 border border-gray-800">
+      <div className="bg-black rounded-lg p-8 border border-gray-800">
         <h3 className="text-xl font-semibold text-white mb-8 flex items-center">
-          <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center mr-3">
+          <div className="w-8 h-8 rounded-lg bg-secondary text-white flex items-center justify-center mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={20}
-              height={20}
+              width={18}
+              height={18}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={1.5}
               strokeLinecap="round"
               strokeLinejoin="round"
               className="lucide lucide-clock"
@@ -134,9 +134,9 @@ export default function OrderTimeline({ status = "Pending", createdAt }) {
           {/* Progress Line */}
           <div className="absolute top-8 left-12 right-12 h-1 bg-gray-700" />
           <div
-            className="absolute top-8 left-12 h-1 bg-orange-500 transition-all duration-500"
+            className="absolute top-8 left-12 h-1 bg-green-600 transition-all duration-500"
             style={{
-              width: `${(currentStepIndex / (steps.length - 1)) * 100}%`,
+              width: `${(currentStepIndex / (steps.length - 1)) * 94}%`,
             }}
           />
 
@@ -155,7 +155,7 @@ export default function OrderTimeline({ status = "Pending", createdAt }) {
                 textColor = "text-white";
                 subText = "Completed";
               } else if (isActive) {
-                bgColor = "bg-orange-600";
+                bgColor = "bg-green-600";
                 textColor = "text-white";
                 subText = "In Progress";
               }
@@ -249,7 +249,7 @@ export default function OrderTimeline({ status = "Pending", createdAt }) {
                   ) : (
                     <span
                       className={`text-sm ${
-                        isActive ? "text-orange-400" : "text-gray-500"
+                        isActive ? "text-green-400" : "text-gray-500"
                       }`}
                     >
                       {subText}

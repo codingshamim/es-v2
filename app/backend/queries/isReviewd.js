@@ -3,27 +3,35 @@ import { dbConnect } from "../connection/dbConnect";
 import { orderModel } from "../models/orderModel";
 import { auth } from "@/auth";
 
-export default async function isReviewd(productId) {
+export default async function isReviewed(productId) {
   const logged = await auth();
+  if (!logged?.user?.id) {
+    return { ok: false };
+  }
 
   try {
     await dbConnect();
 
     const successedOrders = await orderModel.find({
-      delivered: "Success",
-      user: logged?.user?.id,
+      delivered: "Shipped",
+      user: logged.user.id,
     });
 
-    // Check if the product exists in any of the successful orders
+    if (!successedOrders || successedOrders.length === 0) {
+      return { ok: false };
+    }
+
     const isFound = successedOrders.some((order) => {
-      const items = formateMongo(order.items);
-      return items.some((item) => item.product === productId);
+      const items = formateMongo(order.orders);
+      return items.some((item) => {
+        // Ensure productId type matches
+        return String(item.productId) === String(productId);
+      });
     });
 
-    return {
-      ok: isFound,
-    };
+    return { ok: isFound };
   } catch (err) {
-    throw new Error(err);
+    console.error("Error in isReviewed:", err);
+    return { ok: false, error: err.message || "Something went wrong" };
   }
 }

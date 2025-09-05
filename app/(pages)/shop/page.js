@@ -1,10 +1,9 @@
 import AnimationContainer from "@/app/components/AnimationContainer";
 import ProductItem from "@/app/components/ProductItem";
-import SortItem from "./_components/SortItem";
-import FilterItem from "./_components/FilterItem";
+
 import { getAllProducts } from "@/app/backend/queries/ProductQuery";
 import Searchbox from "./_components/Searchbox";
-import FilterInput from "@/app/(admin-panel)/creator/_components/FilterInput";
+
 export const metadata = {
   title: "Esvibes - Shop",
 };

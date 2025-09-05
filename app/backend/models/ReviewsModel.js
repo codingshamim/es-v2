@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 const reviewsSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
@@ -12,6 +12,11 @@ const reviewsSchema = new Schema({
     type: Schema.ObjectId,
     required: true,
   },
+  images: [
+    {
+      type: String, // fileUrl path
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

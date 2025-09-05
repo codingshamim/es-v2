@@ -5,7 +5,7 @@ export default function CommentButton() {
   return (
     <button
       disabled={pending}
-      className={`absolute right-2 anim-btn bg-white text-black ${
+      className={`absolute right-2 new-btn bg-white text-black ${
         pending || "hover:bg-[#cacaca] "
       }`}
     >

@@ -5,7 +5,7 @@ import { dbConnect } from "../backend/connection/dbConnect";
 import { UserModel } from "../backend/models/UserModel";
 import { ProductModel } from "../backend/models/ProductModel";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+
 import formateMongo from "@/helpers/formateMongo";
 
 const checkAdmin = async () => {

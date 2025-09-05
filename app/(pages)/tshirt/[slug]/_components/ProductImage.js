@@ -1,6 +1,6 @@
 "use client";
 import ReusableImage from "@/app/_components/ReusableImage";
-import Image from "next/image";
+
 import { useState } from "react";
 
 export default function ProductImage({ thumbnail, title, gallery }) {
@@ -10,7 +10,7 @@ export default function ProductImage({ thumbnail, title, gallery }) {
       <ReusableImage
         width={1200}
         height={1200}
-        className="w-full h-[350px] object-cover"
+        className="w-full  object-cover"
         src={image}
         alt={title}
       />

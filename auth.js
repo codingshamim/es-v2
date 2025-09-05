@@ -5,6 +5,7 @@ import { UserModel } from "./app/backend/models/UserModel";
 import { dbConnect } from "./app/backend/connection/dbConnect";
 import bcrypt from "bcrypt";
 import { authConfig } from "@/auth.config";
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -25,6 +26,7 @@ export const {
 
         try {
           const user = await UserModel.findOne({ phone: credentials.phone });
+
           if (user) {
             const isMatch = await bcrypt.compare(
               credentials.password,
@@ -33,7 +35,8 @@ export const {
 
             if (isMatch) {
               return {
-                id: user._id.toString(), // Convert MongoDB ObjectId to string
+                id: user._id.toString(),
+                role: user.role, // ✅ include role
               };
             } else {
               throw new Error("Incorrect Password");
@@ -47,18 +50,24 @@ export const {
       },
     }),
   ],
+
   trustHost: true,
   trustHostedDomain: true,
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id; // Include only the user ID in the JWT token
+        token.id = user.id;
+        token.role = user.role; // ✅ attach role to JWT
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user = { id: token.id }; // Include only the user ID in the session
+        session.user = {
+          id: token.id,
+          role: token.role, // ✅ attach role to session
+        };
       }
       return session;
     },

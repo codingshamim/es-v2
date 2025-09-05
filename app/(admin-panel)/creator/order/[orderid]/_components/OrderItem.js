@@ -16,7 +16,7 @@ export default async function OrderItem({ order }) {
           alt={product?.title || "Unknown title"}
           className="w-20 h-20 rounded-lg  border-2 border-gray-600"
         />
-        <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold text-white">
+        <div className="absolute -top-2 -right-2 w-6 h-6 bg-secondary rounded-full flex items-center justify-center text-xs font-bold text-white">
           {order?.quantity || 0}
         </div>
       </div>
@@ -25,16 +25,16 @@ export default async function OrderItem({ order }) {
           {product?.title || "Invalid title"}
         </h4>
         <div className="flex items-center space-x-4 mb-3">
-          <span className="px-3 py-1 bg-gray-700 rounded-lg text-sm text-gray-300">
+          <span className="px-3 py-1 bg-secondary rounded-lg text-sm text-gray-300">
             Size: {order?.size || 0}
           </span>
-          <span className="px-3 py-1 bg-blue-600 rounded-lg text-sm text-white">
+          <span className="px-3 py-1 bg-secondary rounded-lg text-sm text-white">
             Qty: {order?.quantity || 0}
           </span>
         </div>
         <div className="flex items-center justify-between">
           <div className="text-gray-400">
-            <span className="text-lg font-medium text-blue-400">
+            <span className="text-lg font-medium text-white">
               {formatePrice(product?.price, product?.discount)}
             </span>{" "}
             each

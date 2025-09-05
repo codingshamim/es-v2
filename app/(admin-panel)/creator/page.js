@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import Link from "next/link";
+
 import DashboardHeader from "./_components/Dashboard/DashboardHeader";
 import LowStockItems from "./_components/Dashboard/LowStockItems";
 import StatsCards from "./_components/Dashboard/StatsCards";
@@ -19,7 +19,6 @@ export default function page() {
         {/* Quick Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <LowStockItems />
-
           <RecentActivity />
         </div>
         {/* Charts Section */}

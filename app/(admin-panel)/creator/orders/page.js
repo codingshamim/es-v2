@@ -41,20 +41,6 @@ export default async function OrdersPage({ searchParams }) {
   return (
     <div id="orders-page" className="page-content p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-3xl font-bold text-white">Orders Management</h2>
-          <p className="text-gray-400 mt-1">Track and manage customer orders</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
-            <i className="fas fa-sync-alt mr-2" /> Refresh
-          </button>
-          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
-            <i className="fas fa-download mr-2" /> Export
-          </button>
-        </div>
-      </div>
 
       {/* Stats */}
       <StatsCard

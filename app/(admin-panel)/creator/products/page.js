@@ -46,11 +46,10 @@ export default async function page({ searchParams }) {
       <PageHeader
         title="Products"
         subTitle="Manage your product inventory and listings"
-        actionButton={actionObj}
       />
 
       {/* Filters and Search */}
-      <FilterAndSearch />
+      <FilterAndSearch actionButton={actionObj} />
 
       {/* Products Table */}
       <div className="bg-black rounded-sm border border-gray-700/50 overflow-hidden shadow-2xl">

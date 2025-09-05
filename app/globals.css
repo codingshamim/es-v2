@@ -72,7 +72,10 @@
   @apply py-[4px] px-8 bg-transparent nav-border outline-none focus:border-white mt-2;
 }
 .form-control .svg {
-  @apply absolute top-[41px] left-2;
+  @apply absolute top-[45px] left-2;
+}
+.form-control .text-area-svg {
+  @apply absolute !top-[41px] left-2;
 }
 .form-control {
   @apply flex flex-col mt-4 relative;
