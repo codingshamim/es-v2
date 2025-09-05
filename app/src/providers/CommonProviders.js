@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { CommonContext } from "../context";
-import { io } from "socket.io-client";
 
 export default function CommonProviders({ children, authenticatedUser }) {
   const [common, setCommon] = useState({
@@ -47,10 +46,7 @@ export default function CommonProviders({ children, authenticatedUser }) {
   });
   const [checkout, setCheckout] = useState([]);
   const [discountPercentage, setDiscountPercentage] = useState(null);
-  const socket = io();
-  useEffect(() => {
-    socket.emit("authenticatedUser", { authenticatedUser });
-  });
+
   return (
     <CommonContext.Provider
       value={{

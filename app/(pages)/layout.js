@@ -8,8 +8,6 @@ import ToastContainer from "@/app/components/ToastContainer";
 import ModalContainer from "@/app/(pages)/tshirt/[slug]/_components/ModalContainer";
 import BuyModal from "../components/BuyModal/BuyModal";
 
-import ChatToggleButton from "./_components/ChatToggleButton";
-import CustomerSupportChat from "./_components/CustomerSupportChat";
 import { auth } from "@/auth";
 
 export const metadata = {
@@ -215,8 +213,6 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="min-h-screen pb-[100px] dark:bg-[#000] dark:text-white max-w-5xl mx-auto py-6 px-6">
         <CommonProviders authenticatedUser={user?.user.id || null}>
-          <ChatToggleButton />
-          <CustomerSupportChat />
           <ToastContainer />
           <ModalContainer />
           <BuyModal />

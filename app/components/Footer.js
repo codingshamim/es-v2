@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import { Mail, Phone } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -21,11 +22,15 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4 text-lg">Contact</h3>
             <div className="space-y-2">
               <p className="text-sm flex items-center">
-                <span className="text-gray-500 mr-2">📧</span>
+                <span className="text-gray-500 mr-2">
+                  <Mail size={18} />
+                </span>
                 contact@esvibes.com
               </p>
               <p className="text-sm flex items-center">
-                <span className="text-gray-500 mr-2">📞</span>
+                <span className="text-gray-500 mr-2">
+                  <Phone size={18} />
+                </span>
                 +880 1816628413
               </p>
             </div>
