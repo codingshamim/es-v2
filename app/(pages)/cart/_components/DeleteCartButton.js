@@ -68,7 +68,7 @@ export default function DeleteCartButton({ cartId, itemName = "item" }) {
         >
           {/* Modal Content */}
           <div
-            className={`bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 transform transition-all duration-300 ${
+            className={`bg-black border border-gray-800 rounded-lg p-6 max-w-md w-full mx-4 transform transition-all duration-300 ${
               showModal ? "scale-100 opacity-100" : "scale-95 opacity-0"
             }`}
             onClick={(e) => e.stopPropagation()}

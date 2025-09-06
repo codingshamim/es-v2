@@ -1,10 +1,10 @@
 import AnimationContainer from "@/app/components/AnimationContainer";
 import AlsoLikes from "./_components/AlsoLikes";
-import CustomerReview from "./_components/CustomerReview";
+
 import ProductContent from "./_components/ProductContent";
 import ProductImage from "./_components/ProductImage";
 import getProductBySlug from "@/app/backend/queries/getProductById";
-import formatePrice from "@/helpers/formatePrice";
+
 import getReviews from "@/app/backend/queries/getReviews";
 import CommentsContainer from "./_components/CommentsContainer";
 import isReviewd from "@/app/backend/queries/isReviewd";
@@ -21,7 +21,6 @@ export default async function page({ params }) {
   const param = await params;
   const product = await getProductBySlug(param?.slug);
 
-  const price = formatePrice(product?.price, product?.discount);
   const reviews = await getReviews(product?._id);
   const rev = await isReviewd(product?._id);
 
@@ -61,7 +60,6 @@ export default async function page({ params }) {
               sizes={product?.sizes}
               description={product?.description}
               title={product?.title}
-              price={price}
               discount={product?.discount}
               stock={product?.stock}
               originalPrice={product?.price}

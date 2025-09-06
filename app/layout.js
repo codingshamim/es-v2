@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import CommonProviders from "./src/providers/CommonProviders";
 import "./globals.css";
+
 export const metadata = {
   // Basic SEO
   title:
@@ -204,7 +205,6 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="bg-[#000] text-white">
         <CommonProviders authenticatedUser={user?.user.id || null}>
-          {" "}
           {children}
         </CommonProviders>
       </body>

@@ -201,3 +201,8 @@ input[type="number"] {
 .hover-glow:hover {
   box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
 }
+
+::selection {
+  background-color: #fff;
+  color: #000;
+}

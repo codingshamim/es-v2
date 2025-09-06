@@ -1,13 +1,21 @@
 "use client";
 
 import AddCart from "@/app/components/AddCart";
+import formatePrice from "@/helpers/formatePrice";
+import mainPrice from "@/helpers/mainPrice";
 
-import Link from "next/link";
 import { useState } from "react";
 
-export default function ProductOrder({ stock, sizes, productId }) {
+export default function ProductOrder({
+  stock,
+  sizes,
+  productId,
+  originalPrice,
+  discount,
+}) {
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [count, setCount] = useState(1);
+  const price = formatePrice(originalPrice, discount, count);
   const increament = () => {
     setCount(count + 1);
   };
@@ -18,6 +26,13 @@ export default function ProductOrder({ stock, sizes, productId }) {
   };
   return (
     <>
+      {" "}
+      <p className="mt-2">
+        <del className="text-gray-300 text-sm mr-2">
+          {mainPrice(originalPrice * count)}{" "}
+        </del>{" "}
+        {price}
+      </p>
       <div className="mt-4 text-sm flex items-center gap-2">
         {sizes?.map((size, index) => (
           <button
